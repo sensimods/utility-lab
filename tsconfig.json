@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2019", // Compiles to modern, but widely supported JS
+    "module": "CommonJS", // Standard module system for Node/npm
+    "lib": ["ES2019", "DOM"], // Tells TS you might use modern JS features
+    "declaration": true, // CRITICAL: Generates the .d.ts type files for your users!
+    "outDir": "./dist", // Puts all compiled code in a neat 'dist' folder
+    "rootDir": "./src", // Tells TS your source code lives in 'src'
+    "strict": true, // Keeps our code ironclad
+    "esModuleInterop": true, // Helps with importing older libraries
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"], // Only compile files in the src folder
+  "exclude": ["node_modules"]
+}
