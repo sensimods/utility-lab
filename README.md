@@ -93,6 +93,14 @@ Performs linear interpolation to calculate a value between a start and end point
 Calculates the discount percentage between an original price and a new price.
 Safely handles division by zero and rounds to two decimal places to prevent long floats.
 
+---
+
+### Function Utilities
+
+#### `debounce(func, delay)`
+
+Creates a debounced version of a function that delays its execution until after the specified delay. Features advanced TypeScript inference, ensuring the returned function strictly requires the exact same parameters as the original. Safe for both Browser and Node.js environments.
+
 ## Usage
 
 ### String Utilities
@@ -154,6 +162,32 @@ lerp(20, 80, 0.25); // 35 (25% of the way between 20 and 80)
 
 calculateDiscountPercentage(100, 50); // 50
 calculateDiscountPercentage(29.99, 25); // 16.64
+```
+
+---
+
+### Function Utilities
+
+```typescript
+import { debounce } from "@sensimods/utility-lab";
+
+// 1. Your original function (e.g., hitting a database)
+const searchDatabase = (query: string) => {
+  console.log(`Searching for: ${query}`);
+};
+
+// 2. Create the debounced version (waits 500ms)
+const debouncedSearch = debounce(searchDatabase, 500);
+
+// 3. Simulate rapid user typing
+debouncedSearch("a");
+debouncedSearch("ap");
+debouncedSearch("app");
+debouncedSearch("appl");
+debouncedSearch("apple");
+
+// Output: "Searching for: apple"
+// (The function only executes ONCE, 500ms after the final keystroke!)
 ```
 
 ---

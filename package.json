@@ -28,7 +28,8 @@
     "discount",
     "percentage",
     "price",
-    "calculate"
+    "calculate",
+    "debounce"
   ],
   "author": "sensimods",
   "license": "MIT",
