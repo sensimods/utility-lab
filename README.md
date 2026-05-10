@@ -54,6 +54,14 @@ Examples:
 - `bus` → `buses`
 - `story` → `stories`
 
+#### `slugify(str)`
+
+Safely converts a string into a URL-friendly slug.
+
+- Converts spaces and symbols into hyphens
+- Removes unsupported URL characters
+- Handles empty strings safely
+
 ---
 
 ### Object Utilities
@@ -70,12 +78,27 @@ Features:
 
 ---
 
+### Number Utilities
+
+#### `randomInt(min, max)`
+
+Generates a random integer between the specified minimum and maximum values (inclusive).
+
+#### `lerp(start, end, amount)`
+
+Performs linear interpolation to calculate a value between a start and end point based on a percentage (`amount`). Perfect for animations and UI calculations.
+
+#### `calculateDiscountPercentage(originalPrice, newPrice)`
+
+Calculates the discount percentage between an original price and a new price.
+Safely handles division by zero and rounds to two decimal places to prevent long floats.
+
 ## Usage
 
 ### String Utilities
 
 ```ts
-import { capitalize, pluralize } from "@sensimods/utility-lab";
+import { capitalize, pluralize, slugify } from "@sensimods/utility-lab";
 
 // Capitalize
 capitalize("hello world"); // "Hello world"
@@ -90,6 +113,9 @@ pluralize(2, "bus", "es"); // "buses"
 
 // Smart 'ies' ending
 pluralize(5, "story", "ies"); // "stories"
+
+// Slugify
+slugify("Hello World! Weclome to 2026!"); // "hello-world-welcome-to-2026"
 ```
 
 ---
@@ -108,6 +134,26 @@ const config = deepFreeze({
 // Cannot assign to 'port' because it is a read-only property.
 
 // config.server.port = 3000
+```
+
+---
+
+### Number Utilities
+
+```ts
+import {
+  randomInt,
+  lerp,
+  calculateDiscountPercentage,
+} from "@sensimods/utility-lab";
+
+randomInt(1, 100); // Random number between 1-100
+
+lerp(0, 100, 0.5); // 50 (50% of the way between 0 and 100)
+lerp(20, 80, 0.25); // 35 (25% of the way between 20 and 80)
+
+calculateDiscountPercentage(100, 50); // 50
+calculateDiscountPercentage(29.99, 25); // 16.64
 ```
 
 ---

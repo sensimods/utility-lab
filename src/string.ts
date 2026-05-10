@@ -40,3 +40,21 @@ export const pluralize = (
 
   return `${str}${ending}`;
 };
+
+/**
+ * Converts a string into a URL-friendly slug.
+ * Strips all special characters, replaces spaces with hyphens, and converts everything to lowercase.
+ *
+ * @example
+ * slugify("Hello World! Welcome to 2026") // "hello-world-welcome-to-2026"
+ *
+ * @param str - The original string to transform.
+ * @returns The formatted, URL-safe slug string.
+ */
+export const slugify = (str: string): string => {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};

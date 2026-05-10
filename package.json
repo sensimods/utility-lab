@@ -18,8 +18,17 @@
     "helpers",
     "string-utils",
     "object-utils",
+    "number-utils",
     "deep-freeze",
-    "pluralize"
+    "pluralize",
+    "slugify",
+    "math",
+    "ecommerce",
+    "finance",
+    "discount",
+    "percentage",
+    "price",
+    "calculate"
   ],
   "author": "sensimods",
   "license": "MIT",
