@@ -1,6 +1,6 @@
 {
   "name": "@sensimods/utility-lab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A collection of modern utility functions for various purposes.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,22 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "deploy": "npm publish --access public"
+  },
+  "keywords": [
+    "typescript",
+    "utilities",
+    "helpers",
+    "string-utils",
+    "object-utils",
+    "deep-freeze",
+    "pluralize"
+  ],
+  "author": "sensimods",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "typescript": "^6.0.3"
