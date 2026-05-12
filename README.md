@@ -46,6 +46,7 @@ pnpm add @sensimods/utility-lab
 - `shuffle(arr)`
 - `sample(arr)`
 - `range(start, end, step?)`
+- `compact(arr)`
 
 ### Number Utilities
 
@@ -84,6 +85,7 @@ import {
   shuffle,
   sample,
   range,
+  compact,
   randomInt,
   lerp,
   formatCurrency
@@ -120,6 +122,7 @@ shuffle([1, 2, 3, 4, 5]) // e.g., [3, 5, 1, 4, 2]
 sample(['apple', 'banana', 'cherry']) // e.g., 'banana'
 range(0, 5) // [0, 1, 2, 3, 4]
 range(10, 25, 5) // [10, 15, 20]
+compact([0, 1, false, 2, '', 3]) // [1, 2, 3]
 
 // Number utilities
 randomInt(1, 100);

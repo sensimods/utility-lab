@@ -1,212 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@sensimods/utility-lab</title><meta name="description" content="Documentation for @sensimods/utility-lab"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">@sensimods/utility-lab</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>@sensimods/utility-lab</h1></div><div class="tsd-panel tsd-typography"><!-- # @sensimods/utility-lab 🧪
-
-A lightweight, fully type-safe collection of modern JavaScript/TypeScript utility functions. Built with zero dependencies and strict compile-time safety in mind.
-
----
-
-## Installation
-
-Install via your preferred package manager:
-
-```bash
-npm install @sensimods/utility-lab
-```
-
-Or with Yarn:
-
-```bash
-yarn add @sensimods/utility-lab
-```
-
-Or with pnpm:
-
-```bash
-pnpm add @sensimods/utility-lab
-```
-
----
-
-## Features
-
-### String Utilities
-
-#### `capitalize(str)`
-
-Safely capitalizes the first letter of any string.
-
-- Handles empty strings
-- Handles edge cases safely
-- Fully type-safe
-
-#### `pluralize(amount, str, ending?)`
-
-Smart pluralization based on numeric amounts.
-
-Supports:
-
-- Standard `"s"` endings
-- `"es"` endings
-- Smart `"ies"` conversion (`story` → `stories`)
-
-Examples:
-
-- `apple` → `apples`
-- `bus` → `buses`
-- `story` → `stories`
-
-#### `slugify(str)`
-
-Safely converts a string into a URL-friendly slug.
-
-- Converts spaces and symbols into hyphens
-- Removes unsupported URL characters
-- Handles empty strings safely
-
----
-
-### Object Utilities
-
-#### `deepFreeze(obj)`
-
-Recursively freezes an object and all nested properties to ensure true immutability.
-
-Features:
-
-- Deep recursive freezing
-- Strict `DeepReadonly<T>` typing
-- Perfect for immutable state management
-
----
-
-### Number Utilities
-
-#### `randomInt(min, max)`
-
-Generates a random integer between the specified minimum and maximum values (inclusive).
-
-#### `lerp(start, end, amount)`
-
-Performs linear interpolation to calculate a value between a start and end point based on a percentage (`amount`). Perfect for animations and UI calculations.
-
-#### `calculateDiscountPercentage(originalPrice, newPrice)`
-
-Calculates the discount percentage between an original price and a new price.
-Safely handles division by zero and rounds to two decimal places to prevent long floats.
-
----
-
-### Function Utilities
-
-#### `debounce(func, delay)`
-
-Creates a debounced version of a function that delays its execution until after the specified delay. Features advanced TypeScript inference, ensuring the returned function strictly requires the exact same parameters as the original. Safe for both Browser and Node.js environments.
-
-## Usage
-
-### String Utilities
-
-```ts
-import { capitalize, pluralize, slugify } from "@sensimods/utility-lab";
-
-// Capitalize
-capitalize("hello world"); // "Hello world"
-capitalize(""); // ""
-
-// Default 's' ending
-pluralize(1, "apple"); // "apple"
-pluralize(3, "apple"); // "apples"
-
-// Custom 'es' ending
-pluralize(2, "bus", "es"); // "buses"
-
-// Smart 'ies' ending
-pluralize(5, "story", "ies"); // "stories"
-
-// Slugify
-slugify("Hello World! Weclome to 2026!"); // "hello-world-welcome-to-2026"
-```
-
----
-
-### Object Utilities
-
-```ts
-import { deepFreeze } from "@sensimods/utility-lab";
-
-const config = deepFreeze({
-  server: { port: 8080 },
-  active: true,
-});
-
-// config.server.port = 3000
-
-// TypeScript Error:
-// Cannot assign to 'port' because it is a read-only property.
-```
-
----
-
-### Number Utilities
-
-```ts
-import {
-  randomInt,
-  lerp,
-  calculateDiscountPercentage,
-} from "@sensimods/utility-lab";
-
-randomInt(1, 100); // Random number between 1-100
-
-lerp(0, 100, 0.5); // 50 (50% of the way between 0 and 100)
-lerp(20, 80, 0.25); // 35 (25% of the way between 20 and 80)
-
-calculateDiscountPercentage(100, 50); // 50
-calculateDiscountPercentage(29.99, 25); // 16.64
-```
-
----
-
-### Function Utilities
-
-```typescript
-import { debounce } from "@sensimods/utility-lab";
-
-// 1. Your original function (e.g., hitting a database)
-const searchDatabase = (query: string) => {
-  console.log(`Searching for: ${query}`);
-};
-
-// 2. Create the debounced version (waits 500ms)
-const debouncedSearch = debounce(searchDatabase, 500);
-
-// 3. Simulate rapid user typing
-debouncedSearch("a");
-debouncedSearch("ap");
-debouncedSearch("app");
-debouncedSearch("appl");
-debouncedSearch("apple");
-
-// Output: "Searching for: apple"
-// (The function only executes ONCE, 500ms after the final keystroke!)
-```
-
----
-
-## Why utility-lab?
-
-- ✅ Zero dependencies
-- ✅ Fully type-safe
-- ✅ Modern TypeScript support
-- ✅ Tree-shakeable
-- ✅ Lightweight
-- ✅ Immutable utilities included
-
----
-
-## License
-
-MIT © sensimods -->
-<h1 id="sensimodsutility-lab-🧪" class="tsd-anchor-link">@sensimods/utility-lab 🧪<a href="#sensimodsutility-lab-🧪" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@sensimods/utility-lab</title><meta name="description" content="Documentation for @sensimods/utility-lab"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">@sensimods/utility-lab</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>@sensimods/utility-lab</h1></div><div class="tsd-panel tsd-typography"><h1 id="sensimodsutility-lab-🧪" class="tsd-anchor-link">@sensimods/utility-lab 🧪<a href="#sensimodsutility-lab-🧪" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
 <p>A lightweight, fully type-safe collection of modern JavaScript/TypeScript utility functions. Built with zero dependencies and strict compile-time safety in mind.</p>
 <hr>
 <h2 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
@@ -238,6 +30,11 @@ MIT © sensimods -->
 <h3 id="array-utilities" class="tsd-anchor-link">Array Utilities<a href="#array-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul>
 <li><code>chunk(arr, size)</code></li>
+<li><code>unique(arr)</code></li>
+<li><code>shuffle(arr)</code></li>
+<li><code>sample(arr)</code></li>
+<li><code>range(start, end, step?)</code></li>
+<li><code>compact(arr)</code></li>
 </ul>
 <h3 id="number-utilities" class="tsd-anchor-link">Number Utilities<a href="#number-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul>
@@ -262,7 +59,7 @@ MIT © sensimods -->
 </ul>
 <hr>
 <h2 id="quick-example" class="tsd-anchor-link">Quick Example<a href="#quick-example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">capitalize</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">pluralize</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">slugify</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">deepFreeze</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">omit</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">chunk</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">randomInt</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">lerp</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">formatCurrency</span><br/><span class="hl-1">  </span><span class="hl-4">debounce</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">throttle</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">once</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">sleep</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">isBrowser</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">isServer</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">isTouchDevice</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">getEnv</span><br/><span class="hl-1">} </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&quot;@sensimods/utility-lab&quot;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">// String utilities</span><br/><span class="hl-0">capitalize</span><span class="hl-1">(</span><span class="hl-2">&quot;hello world&quot;</span><span class="hl-1">); </span><span class="hl-5">// &quot;Hello world&quot;</span><br/><span class="hl-0">pluralize</span><span class="hl-1">(</span><span class="hl-6">5</span><span class="hl-1">, </span><span class="hl-2">&quot;story&quot;</span><span class="hl-1">, </span><span class="hl-2">&quot;ies&quot;</span><span class="hl-1">); </span><span class="hl-5">// &quot;stories&quot;</span><br/><span class="hl-0">slugify</span><span class="hl-1">(</span><span class="hl-2">&quot;Hello World! Welcome to 2026!&quot;</span><span class="hl-1">);</span><br/><span class="hl-5">// &quot;hello-world-welcome-to-2026&quot;</span><br/><br/><span class="hl-5">// Object utilities</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">config</span><span class="hl-1"> = </span><span class="hl-0">deepFreeze</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">api:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-4">port:</span><span class="hl-1"> </span><span class="hl-6">8080</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">user</span><span class="hl-1"> = { </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-4">name:</span><span class="hl-1"> </span><span class="hl-2">&quot;John&quot;</span><span class="hl-1">, </span><span class="hl-4">password:</span><span class="hl-1"> </span><span class="hl-2">&quot;123&quot;</span><span class="hl-1"> };</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">publicUser</span><span class="hl-1"> = </span><span class="hl-0">omit</span><span class="hl-1">(</span><span class="hl-4">user</span><span class="hl-1">, [</span><span class="hl-2">&quot;password&quot;</span><span class="hl-1">]); </span><span class="hl-5">// { id: 1, name: &#39;John&#39; }</span><br/><br/><span class="hl-5">// Array utilities</span><br/><span class="hl-0">chunk</span><span class="hl-1">([</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">4</span><span class="hl-1">, </span><span class="hl-6">5</span><span class="hl-1">], </span><span class="hl-6">2</span><span class="hl-1">); </span><span class="hl-5">// [[1, 2], [3, 4], [5]]</span><br/><br/><span class="hl-5">// Number utilities</span><br/><span class="hl-0">randomInt</span><span class="hl-1">(</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">100</span><span class="hl-1">);</span><br/><span class="hl-0">lerp</span><span class="hl-1">(</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">100</span><span class="hl-1">, </span><span class="hl-6">0.5</span><span class="hl-1">); </span><span class="hl-5">// 50</span><br/><span class="hl-0">formatCurrency</span><span class="hl-1">(</span><span class="hl-6">100</span><span class="hl-1">, </span><span class="hl-2">&quot;EUR&quot;</span><span class="hl-1">, </span><span class="hl-2">&quot;de-DE&quot;</span><span class="hl-1">) </span><span class="hl-5">// &quot;100,00 €&quot;</span><br/><br/><span class="hl-5">// Function utilities</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-0">fetchResults</span><span class="hl-1"> = (</span><span class="hl-4">query</span><span class="hl-1">: </span><span class="hl-9">string</span><span class="hl-1">) </span><span class="hl-7">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1"> </span><span class="hl-5">// Imagine this function makes an API call to fetch search results</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">`Fetching results for: </span><span class="hl-7">${</span><span class="hl-4">query</span><span class="hl-7">}</span><span class="hl-2">`</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">handleSearch</span><span class="hl-1"> = </span><span class="hl-0">debounce</span><span class="hl-1">((</span><span class="hl-4">query</span><span class="hl-1">: </span><span class="hl-9">string</span><span class="hl-1">) </span><span class="hl-7">=&gt;</span><span class="hl-1"> </span><span class="hl-0">fetchResults</span><span class="hl-1">(</span><span class="hl-4">query</span><span class="hl-1">), </span><span class="hl-6">500</span><span class="hl-1">);</span><br/><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">handleScroll</span><span class="hl-1"> = </span><span class="hl-0">throttle</span><span class="hl-1">(() </span><span class="hl-7">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;Scrolling...&quot;</span><span class="hl-1">), </span><span class="hl-6">100</span><span class="hl-1">);</span><br/><span class="hl-4">window</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-2">&quot;scroll&quot;</span><span class="hl-1">, </span><span class="hl-4">handleScroll</span><span class="hl-1">);</span><br/><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">initialize</span><span class="hl-1"> = </span><span class="hl-0">once</span><span class="hl-1">(() </span><span class="hl-7">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;Setup complete!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-3">return</span><span class="hl-1"> { </span><span class="hl-4">status:</span><span class="hl-1"> </span><span class="hl-2">&quot;ready&quot;</span><span class="hl-1"> };</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-0">initialize</span><span class="hl-1">(); </span><span class="hl-5">// Logs &quot;Setup complete!&quot;</span><br/><span class="hl-0">initialize</span><span class="hl-1">(); </span><span class="hl-5">// Does nothing, just returns { status: &quot;ready&quot; }</span><br/><br/><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">sleep</span><span class="hl-1">(</span><span class="hl-6">2000</span><span class="hl-1">); </span><span class="hl-5">// Wait for 2 seconds</span><br/><br/><br/><span class="hl-5">// Environment utilities</span><br/><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-0">isBrowser</span><span class="hl-1">()) {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;This code is running in a browser!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-0">isServer</span><span class="hl-1">()) {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;This code is running on the server!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-0">isTouchDevice</span><span class="hl-1">()) {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;This device supports touch interactions!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-1"> </span><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">apiUrl</span><span class="hl-1"> = </span><span class="hl-0">getEnv</span><span class="hl-1">(</span><span class="hl-2">&quot;API_URL&quot;</span><span class="hl-1">, </span><span class="hl-2">&quot;https://default.api.com&quot;</span><span class="hl-1">);</span><br/><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">apiUrl</span><span class="hl-1">); </span><span class="hl-5">// Will log the value of API_URL or &quot;https://default.api.com&quot; if not set</span>
+<pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">capitalize</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">pluralize</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">slugify</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">deepFreeze</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">omit</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">chunk</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">unique</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">shuffle</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">sample</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">range</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">compact</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">randomInt</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">lerp</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">formatCurrency</span><br/><span class="hl-1">  </span><span class="hl-4">debounce</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">throttle</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">once</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">sleep</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">isBrowser</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">isServer</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">isTouchDevice</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">getEnv</span><br/><span class="hl-1">} </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&quot;@sensimods/utility-lab&quot;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">// String utilities</span><br/><span class="hl-0">capitalize</span><span class="hl-1">(</span><span class="hl-2">&quot;hello world&quot;</span><span class="hl-1">); </span><span class="hl-5">// &quot;Hello world&quot;</span><br/><span class="hl-0">pluralize</span><span class="hl-1">(</span><span class="hl-6">5</span><span class="hl-1">, </span><span class="hl-2">&quot;story&quot;</span><span class="hl-1">, </span><span class="hl-2">&quot;ies&quot;</span><span class="hl-1">); </span><span class="hl-5">// &quot;stories&quot;</span><br/><span class="hl-0">slugify</span><span class="hl-1">(</span><span class="hl-2">&quot;Hello World! Welcome to 2026!&quot;</span><span class="hl-1">);</span><br/><span class="hl-5">// &quot;hello-world-welcome-to-2026&quot;</span><br/><br/><span class="hl-5">// Object utilities</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">config</span><span class="hl-1"> = </span><span class="hl-0">deepFreeze</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">api:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-4">port:</span><span class="hl-1"> </span><span class="hl-6">8080</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">user</span><span class="hl-1"> = { </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-4">name:</span><span class="hl-1"> </span><span class="hl-2">&quot;John&quot;</span><span class="hl-1">, </span><span class="hl-4">password:</span><span class="hl-1"> </span><span class="hl-2">&quot;123&quot;</span><span class="hl-1"> };</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">publicUser</span><span class="hl-1"> = </span><span class="hl-0">omit</span><span class="hl-1">(</span><span class="hl-4">user</span><span class="hl-1">, [</span><span class="hl-2">&quot;password&quot;</span><span class="hl-1">]); </span><span class="hl-5">// { id: 1, name: &#39;John&#39; }</span><br/><br/><span class="hl-5">// Array utilities</span><br/><span class="hl-0">chunk</span><span class="hl-1">([</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">4</span><span class="hl-1">, </span><span class="hl-6">5</span><span class="hl-1">], </span><span class="hl-6">2</span><span class="hl-1">); </span><span class="hl-5">// [[1, 2], [3, 4], [5]]</span><br/><span class="hl-0">unique</span><span class="hl-1">([</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">4</span><span class="hl-1">, </span><span class="hl-6">4</span><span class="hl-1">, </span><span class="hl-6">5</span><span class="hl-1">]) </span><span class="hl-5">// [1, 2, 3, 4, 5]</span><br/><span class="hl-0">shuffle</span><span class="hl-1">([</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">4</span><span class="hl-1">, </span><span class="hl-6">5</span><span class="hl-1">]) </span><span class="hl-5">// e.g., [3, 5, 1, 4, 2]</span><br/><span class="hl-0">sample</span><span class="hl-1">([</span><span class="hl-2">&#39;apple&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;banana&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;cherry&#39;</span><span class="hl-1">]) </span><span class="hl-5">// e.g., &#39;banana&#39;</span><br/><span class="hl-0">range</span><span class="hl-1">(</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">5</span><span class="hl-1">) </span><span class="hl-5">// [0, 1, 2, 3, 4]</span><br/><span class="hl-0">range</span><span class="hl-1">(</span><span class="hl-6">10</span><span class="hl-1">, </span><span class="hl-6">25</span><span class="hl-1">, </span><span class="hl-6">5</span><span class="hl-1">) </span><span class="hl-5">// [10, 15, 20]</span><br/><span class="hl-0">compact</span><span class="hl-1">([</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-7">false</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-2">&#39;&#39;</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">]) </span><span class="hl-5">// [1, 2, 3]</span><br/><br/><span class="hl-5">// Number utilities</span><br/><span class="hl-0">randomInt</span><span class="hl-1">(</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">100</span><span class="hl-1">);</span><br/><span class="hl-0">lerp</span><span class="hl-1">(</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">100</span><span class="hl-1">, </span><span class="hl-6">0.5</span><span class="hl-1">); </span><span class="hl-5">// 50</span><br/><span class="hl-0">formatCurrency</span><span class="hl-1">(</span><span class="hl-6">100</span><span class="hl-1">, </span><span class="hl-2">&quot;EUR&quot;</span><span class="hl-1">, </span><span class="hl-2">&quot;de-DE&quot;</span><span class="hl-1">) </span><span class="hl-5">// &quot;100,00 €&quot;</span><br/><br/><span class="hl-5">// Function utilities</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-0">fetchResults</span><span class="hl-1"> = (</span><span class="hl-4">query</span><span class="hl-1">: </span><span class="hl-9">string</span><span class="hl-1">) </span><span class="hl-7">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1"> </span><span class="hl-5">// Imagine this function makes an API call to fetch search results</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">`Fetching results for: </span><span class="hl-7">${</span><span class="hl-4">query</span><span class="hl-7">}</span><span class="hl-2">`</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">handleSearch</span><span class="hl-1"> = </span><span class="hl-0">debounce</span><span class="hl-1">((</span><span class="hl-4">query</span><span class="hl-1">: </span><span class="hl-9">string</span><span class="hl-1">) </span><span class="hl-7">=&gt;</span><span class="hl-1"> </span><span class="hl-0">fetchResults</span><span class="hl-1">(</span><span class="hl-4">query</span><span class="hl-1">), </span><span class="hl-6">500</span><span class="hl-1">);</span><br/><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">handleScroll</span><span class="hl-1"> = </span><span class="hl-0">throttle</span><span class="hl-1">(() </span><span class="hl-7">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;Scrolling...&quot;</span><span class="hl-1">), </span><span class="hl-6">100</span><span class="hl-1">);</span><br/><span class="hl-4">window</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-2">&quot;scroll&quot;</span><span class="hl-1">, </span><span class="hl-4">handleScroll</span><span class="hl-1">);</span><br/><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">initialize</span><span class="hl-1"> = </span><span class="hl-0">once</span><span class="hl-1">(() </span><span class="hl-7">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;Setup complete!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-3">return</span><span class="hl-1"> { </span><span class="hl-4">status:</span><span class="hl-1"> </span><span class="hl-2">&quot;ready&quot;</span><span class="hl-1"> };</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-0">initialize</span><span class="hl-1">(); </span><span class="hl-5">// Logs &quot;Setup complete!&quot;</span><br/><span class="hl-0">initialize</span><span class="hl-1">(); </span><span class="hl-5">// Does nothing, just returns { status: &quot;ready&quot; }</span><br/><br/><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">sleep</span><span class="hl-1">(</span><span class="hl-6">2000</span><span class="hl-1">); </span><span class="hl-5">// Wait for 2 seconds</span><br/><br/><br/><span class="hl-5">// Environment utilities</span><br/><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-0">isBrowser</span><span class="hl-1">()) {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;This code is running in a browser!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-0">isServer</span><span class="hl-1">()) {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;This code is running on the server!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-0">isTouchDevice</span><span class="hl-1">()) {</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&quot;This device supports touch interactions!&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-1"> </span><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">apiUrl</span><span class="hl-1"> = </span><span class="hl-0">getEnv</span><span class="hl-1">(</span><span class="hl-2">&quot;API_URL&quot;</span><span class="hl-1">, </span><span class="hl-2">&quot;https://default.api.com&quot;</span><span class="hl-1">);</span><br/><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">apiUrl</span><span class="hl-1">); </span><span class="hl-5">// Will log the value of API_URL or &quot;https://default.api.com&quot; if not set</span>
 </code><button type="button">Copy</button></pre>
 
 <hr>

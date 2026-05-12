@@ -9,10 +9,12 @@
  * chunk([1, 2, 3, 4, 5], 2) // [[1, 2], [3, 4], [5]]
  */
 export const chunk = <T>(arr: T[], size: number): T[][] => {
-  if (size <= 0) return [];
+  const chunkSize = Math.max(0, Math.floor(size)); // Ensure size is an integer >= 0
+  if (chunkSize === 0 || arr.length === 0) return [];
+
   const result: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size));
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    result.push(arr.slice(i, i + chunkSize));
   }
   return result;
 };
@@ -72,8 +74,27 @@ export const sample = <T>(arr: T[]): T | undefined => {
  */
 export const range = (start: number, end: number, step = 1): number[] => {
   const result = [];
-  for (let i = start; i < end; i += step) {
-    result.push(i);
+
+  if (step === 0) return [];
+
+  if (step > 0) {
+    for (let i = start; i < end; i += step) result.push(i);
+  } else {
+    for (let i = start; i > end; i += step) result.push(i);
   }
+
   return result;
+};
+
+/**
+ * Removes all falsy values (false, null, 0, "", undefined, and NaN) from an array.
+ * @param arr - The array to compact.
+ * @returns A new array with all falsy values removed.
+ * @example
+ * compact([0, 1, false, 2, '', 3]) // [1, 2, 3]
+ */
+export const compact = <T>(
+  arr: (T | null | undefined | false | "" | 0)[],
+): T[] => {
+  return arr.filter(Boolean) as T[];
 };
