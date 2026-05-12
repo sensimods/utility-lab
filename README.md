@@ -264,6 +264,7 @@ pnpm add @sensimods/utility-lab
 - `debounce(func, delay)`
 - `throttle(func, limit)`
 - `once(func)`
+- `sleep(ms)`
 
 ### Environment Utilities
 
@@ -290,6 +291,7 @@ import {
   debounce,
   throttle,
   once,
+  sleep,
   isBrowser,
   isServer,
   isTouchDevice,
@@ -337,6 +339,8 @@ const initialize = once(() => {
 
 initialize(); // Logs "Setup complete!"
 initialize(); // Does nothing, just returns { status: "ready" }
+
+await sleep(2000); // Wait for 2 seconds
 
 
 // Environment utilities

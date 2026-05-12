@@ -88,3 +88,14 @@ export const once = <T extends (...args: any[]) => any>(
     return result;
   };
 };
+
+/**
+ * Pauses the execution of an async function for a specified number of milliseconds.
+ *
+ * @param ms - Milliseconds to sleep.
+ * @returns A promise that resolves after the delay.
+ * @example
+ * await sleep(2000); // Wait for 2 seconds
+ */
+export const sleep = (ms: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, ms));
