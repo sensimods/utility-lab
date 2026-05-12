@@ -267,6 +267,7 @@ pnpm add @sensimods/utility-lab
 
 - `isBrowser()`
 - `isServer()`
+- `isTouchDevice()`
 
 ---
 
@@ -286,6 +287,7 @@ import {
   debounce,
   isBrowser,
   isServer,
+  isTouchDevice,
 } from "@sensimods/utility-lab";
 
 // String utilities
@@ -324,6 +326,10 @@ if (isBrowser()) {
 
 if (isServer()) {
   console.log("This code is running on the server!");
+};
+
+if (isTouchDevice()) {
+  console.log("This device supports touch interactions!");
 };
 ```
 

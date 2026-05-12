@@ -23,3 +23,17 @@ export const isBrowser = (): boolean => {
  * }
  */
 export const isServer = (): boolean => !isBrowser();
+
+/**
+ * Checks if the current device supports touch interactions.
+ * @returns `true` if touch is supported.
+ * @example
+ * if (isTouchDevice()) {
+ *   console.log("This device supports touch interactions!");
+ * }
+ */
+export const isTouchDevice = (): boolean => {
+  return (
+    isBrowser() && ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  );
+};
