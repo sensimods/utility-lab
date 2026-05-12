@@ -58,3 +58,22 @@ export const sample = <T>(arr: T[]): T | undefined => {
   if (arr.length === 0) return undefined;
   return arr[Math.floor(Math.random() * arr.length)];
 };
+
+/**
+ * Creates an array of numbers progressing from 'start' up to 'end'.
+ *
+ * @param start - The start of the range.
+ * @param end - The end of the range (exclusive).
+ * @param step - The value to increment by (default is 1).
+ * @returns An array of numbers.
+ * @example
+ * range(0, 5) // [0, 1, 2, 3, 4]
+ * range(10, 25, 5) // [10, 15, 20]
+ */
+export const range = (start: number, end: number, step = 1): number[] => {
+  const result = [];
+  for (let i = start; i < end; i += step) {
+    result.push(i);
+  }
+  return result;
+};
