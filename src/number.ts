@@ -5,6 +5,10 @@
  * @param max - The maximum integer value (inclusive).
  * @returns A random integer between min and max.
  * @throws Will throw an error if the minimum value is greater than the maximum value.
+ * @example
+ * randomInt(1, 10) // could return any integer from 1 to 10
+ * randomInt(5, 5) // will always return 5
+ * randomInt(10, 1) // throws an error
  */
 
 export const randomInt = (min: number, max: number): number => {

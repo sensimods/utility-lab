@@ -2,6 +2,9 @@
  * Capitalizes the first letter of a given string.
  * @param str - The string to capitalize.
  * @returns The capitalized string.
+ * @example
+ * capitalize("hello world") // "Hello world"
+ * capitalize("typescript") // "Typescript"
  */
 
 export const capitalize = (str: string): string => {
@@ -22,6 +25,9 @@ export type PluralTypes = "s" | "es" | "ies";
  * @param str - The string to pluralize.
  * @param ending - The type of pluralization to apply (default is "s").
  * @returns The pluralized string if amount is not 1, otherwise returns the original string.
+ * @example
+ * pluralize(1, "cat") // "cat"
+ * pluralize(2, "cat") // "cats"
  */
 
 export const pluralize = (

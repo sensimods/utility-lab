@@ -1,4 +1,4 @@
-# @sensimods/utility-lab 🧪
+<!-- # @sensimods/utility-lab 🧪
 
 A lightweight, fully type-safe collection of modern JavaScript/TypeScript utility functions. Built with zero dependencies and strict compile-time safety in mind.
 
@@ -138,10 +138,10 @@ const config = deepFreeze({
   active: true,
 });
 
+// config.server.port = 3000
+
 // TypeScript Error:
 // Cannot assign to 'port' because it is a read-only property.
-
-// config.server.port = 3000
 ```
 
 ---
@@ -200,6 +200,119 @@ debouncedSearch("apple");
 - ✅ Tree-shakeable
 - ✅ Lightweight
 - ✅ Immutable utilities included
+
+---
+
+## License
+
+MIT © sensimods -->
+
+# @sensimods/utility-lab 🧪
+
+A lightweight, fully type-safe collection of modern JavaScript/TypeScript utility functions. Built with zero dependencies and strict compile-time safety in mind.
+
+---
+
+## Installation
+
+Install via your preferred package manager:
+
+```bash
+npm install @sensimods/utility-lab
+```
+
+Or with Yarn:
+
+```bash
+yarn add @sensimods/utility-lab
+```
+
+Or with pnpm:
+
+```bash
+pnpm add @sensimods/utility-lab
+```
+
+---
+
+## Features
+
+### String Utilities
+
+- `capitalize(str)`
+- `pluralize(amount, str, ending?)`
+- `slugify(str)`
+
+### Object Utilities
+
+- `deepFreeze(obj)`
+
+### Number Utilities
+
+- `randomInt(min, max)`
+- `lerp(start, end, amount)`
+- `calculateDiscountPercentage(originalPrice, newPrice)`
+
+### Function Utilities
+
+- `debounce(func, delay)`
+
+---
+
+## Quick Example
+
+```ts
+import {
+  capitalize,
+  pluralize,
+  slugify,
+  deepFreeze,
+  randomInt,
+  lerp,
+  debounce,
+} from "@sensimods/utility-lab";
+
+// String utilities
+capitalize("hello world"); // "Hello world"
+pluralize(5, "story", "ies"); // "stories"
+slugify("Hello World! Welcome to 2026!");
+// "hello-world-welcome-to-2026"
+
+// Object utilities
+const config = deepFreeze({
+  api: {
+    port: 8080,
+  },
+});
+
+// Number utilities
+randomInt(1, 100);
+lerp(0, 100, 0.5); // 50
+
+// Function utilities
+const debounced = debounce(() => {
+  console.log("Executed!");
+}, 500);
+```
+
+---
+
+## Documentation
+
+Full documentation, examples, and API references are available here:
+
+👉 **[View Documentation](https://github.com/sensimods/utility-lab)**
+
+---
+
+## Why utility-lab?
+
+- ✅ Fully type-safe
+- ✅ Zero dependencies
+- ✅ Lightweight & fast
+- ✅ Tree-shakeable
+- ✅ Modern TypeScript support
+- ✅ Browser & Node.js compatible
 
 ---
 

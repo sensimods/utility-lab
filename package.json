@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "deploy": "npm publish --access public"
+    "deploy": "npm publish --access public",
+    "docs": "typedoc --entryPoints src/index.ts --out docs"
   },
   "keywords": [
     "typescript",
@@ -37,6 +38,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
+    "typedoc": "^0.28.19",
     "typescript": "^6.0.3"
   }
 }
