@@ -262,6 +262,7 @@ pnpm add @sensimods/utility-lab
 ### Function Utilities
 
 - `debounce(func, delay)`
+- `throttle(func, limit)`
 
 ### Environment Utilities
 
@@ -286,6 +287,7 @@ import {
   lerp,
   formatCurrency
   debounce,
+  throttle,
   isBrowser,
   isServer,
   isTouchDevice,
@@ -317,9 +319,14 @@ lerp(0, 100, 0.5); // 50
 formatCurrency(100, "EUR", "de-DE") // "100,00 €"
 
 // Function utilities
-const debounced = debounce(() => {
-  console.log("Executed!");
-}, 500);
+const fetchResults = (query: string) => {
+ // Imagine this function makes an API call to fetch search results
+  console.log(`Fetching results for: ${query}`);
+};
+const handleSearch = debounce((query: string) => fetchResults(query), 500);
+
+const handleScroll = throttle(() => console.log("Scrolling..."), 100);
+window.addEventListener("scroll", handleScroll);
 
 // Environment utilities
 if (isBrowser()) {

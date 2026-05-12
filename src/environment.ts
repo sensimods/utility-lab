@@ -1,3 +1,6 @@
+const _isBrowser =
+  typeof window !== "undefined" && typeof window.document !== "undefined";
+
 /**
  * Checks if the code is currently running in a browser environment.
  * Useful for Next.js SSR/Client checks.
@@ -7,11 +10,7 @@
  *   console.log("This code is running in a browser!");
  * }
  */
-export const isBrowser = (): boolean => {
-  return (
-    typeof window !== "undefined" && typeof window.document !== "undefined"
-  );
-};
+export const isBrowser = (): boolean => _isBrowser;
 
 /**
  * Checks if the code is currently running on the server.
@@ -22,7 +21,7 @@ export const isBrowser = (): boolean => {
  *   console.log("This code is running on the server!");
  * }
  */
-export const isServer = (): boolean => !isBrowser();
+export const isServer = (): boolean => !_isBrowser;
 
 /**
  * Checks if the current device supports touch interactions.
@@ -33,8 +32,13 @@ export const isServer = (): boolean => !isBrowser();
  * }
  */
 export const isTouchDevice = (): boolean => {
+  if (!isBrowser()) return false;
   return (
-    isBrowser() && ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    // @ts-ignore - msMaxTouchPoints is for older IE/Edge
+    navigator.msMaxTouchPoints > 0 ||
+    window.matchMedia("(pointer: coarse)").matches
   );
 };
 

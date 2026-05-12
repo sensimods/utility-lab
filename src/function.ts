@@ -4,6 +4,10 @@
  * Useful for performance optimization on things like search inputs or window resizing.
  *
  * @example
+ * const fetchResults = (query: string) => {
+ *   // Imagine this function makes an API call to fetch search results
+ *   console.log(`Fetching results for: ${query}`);
+ * }
  * const handleSearch = debounce((query: string) => fetchResults(query), 500);
  *
  * @param func - The function to debounce.
@@ -28,5 +32,30 @@ export const debounce = <T extends (...args: any[]) => any>(
     timeoutId = setTimeout(() => {
       func(...args);
     }, delay);
+  };
+};
+
+/**
+ * Creates a throttled version of a function that only executes at most once
+ * per every `limit` milliseconds.
+ * @param func - The function to throttle.
+ * @param limit - The number of milliseconds to wait before allowing the next execution.
+ * @returns A new function that expects the exact same parameters as the original.
+ * @example
+ * const handleScroll = throttle(() => console.log("Scrolling..."), 100);
+ * window.addEventListener("scroll", handleScroll);
+ */
+export const throttle = <T extends (...args: any[]) => any>(
+  func: T,
+  limit: number,
+): ((...args: Parameters<T>) => void) => {
+  let inThrottle = false;
+
+  return (...args: Parameters<T>): void => {
+    if (!inThrottle) {
+      func(...args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
   };
 };
