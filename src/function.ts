@@ -2,62 +2,89 @@
  * Creates a debounced version of a function that delays its execution
  * until after `delay` milliseconds have elapsed since the last time it was called.
  * Useful for performance optimization on things like search inputs or window resizing.
- *
- * @example
- * const fetchResults = (query: string) => {
- *   // Imagine this function makes an API call to fetch search results
- *   console.log(`Fetching results for: ${query}`);
- * }
- * const handleSearch = debounce((query: string) => fetchResults(query), 500);
+ * The returned function includes a `.cancel()` method to clear any pending timers.
+ * This is essential for cleaning up in component-based frameworks (like React)
+ * to prevent updates on unmounted components.
  *
  * @param func - The function to debounce.
  * @param delay - The number of milliseconds to wait.
- * @returns A new function that expects the exact same parameters as the original.
+ * @returns A debounced function with a `.cancel()` method.
+ *
+ * @example
+ * const handleSearch = debounce((query: string) => console.log(query), 500);
+ *
+ * // Later, if the component unmounts:
+ * handleSearch.cancel();
  */
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
   delay: number,
-): ((...args: Parameters<T>) => void) => {
-  // We use ReturnType<typeof setTimeout> instead of 'number' so this
-  // works flawlessly in both Browser and Node.js environments.
+): ((...args: Parameters<T>) => void) & { cancel: () => void } => {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const wait = Math.max(0, delay);
 
-  return (...args: Parameters<T>): void => {
-    // If the function is called again before the timer runs out, clear the old timer
+  const debounced = (...args: Parameters<T>): void => {
     if (timeoutId !== undefined) {
       clearTimeout(timeoutId);
     }
 
-    // Set a new timer
     timeoutId = setTimeout(() => {
       func(...args);
-    }, delay);
+    }, wait);
   };
+
+  debounced.cancel = () => {
+    if (timeoutId !== undefined) {
+      clearTimeout(timeoutId);
+      timeoutId = undefined;
+    }
+  };
+
+  return debounced;
 };
 
 /**
  * Creates a throttled version of a function that only executes at most once
  * per every `limit` milliseconds.
+ *
+ * The returned function includes a `.cancel()` method to reset the throttle state
+ * and clear any active timers.
+ *
  * @param func - The function to throttle.
- * @param limit - The number of milliseconds to wait before allowing the next execution.
- * @returns A new function that expects the exact same parameters as the original.
+ * @param limit - The number of milliseconds to wait between executions.
+ * @returns A throttled function with a `.cancel()` method.
+ *
  * @example
  * const handleScroll = throttle(() => console.log("Scrolling..."), 100);
- * window.addEventListener("scroll", handleScroll);
+ *
+ * // To stop throttling and clear timers:
+ * handleScroll.cancel();
  */
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
   limit: number,
-): ((...args: Parameters<T>) => void) => {
+): ((...args: Parameters<T>) => void) & { cancel: () => void } => {
   let inThrottle = false;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const wait = Math.max(0, limit);
 
-  return (...args: Parameters<T>): void => {
+  const throttled = (...args: Parameters<T>): void => {
     if (!inThrottle) {
       func(...args);
       inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
+      timeoutId = setTimeout(() => (inThrottle = false), wait);
     }
   };
+
+  throttled.cancel = () => {
+    if (timeoutId !== undefined) {
+      clearTimeout(timeoutId);
+      timeoutId = undefined;
+    }
+    inThrottle = false;
+  };
+
+  return throttled;
 };
 
 /**

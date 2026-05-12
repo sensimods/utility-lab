@@ -1,15 +1,16 @@
 /**
  * Capitalizes the first letter of a given string.
  * @param str - The string to capitalize.
+ * @param locale - Optional locale identifier for locale-specific case mapping (default is "en-US").
  * @returns The capitalized string.
  * @example
  * capitalize("hello world") // "Hello world"
  * capitalize("typescript") // "Typescript"
  */
 
-export const capitalize = (str: string): string => {
+export const capitalize = (str: string, locale = "en-US"): string => {
   if (!str || typeof str !== "string" || !str.trim()) return str;
-  return str[0].toUpperCase() + str.slice(1);
+  return str.charAt(0).toLocaleUpperCase(locale) + str.slice(1);
 };
 
 /**
@@ -37,11 +38,11 @@ export const pluralize = (
 ): string => {
   if (!str || typeof str !== "string" || !str.trim()) return str;
 
-  if (amount === 1) return str;
+  // In English, 1 is singular. 0 and negatives are typically plural.
+  if (Math.abs(amount) === 1) return str;
 
-  // Handle the "ies" edge case for words ending in "y" (e.g., "story" -> "stories")
-  if (ending === "ies" && str.endsWith("y")) {
-    return str.slice(0, -1) + ending; // Slices off the last character
+  if (ending === "ies" && str.toLowerCase().endsWith("y")) {
+    return str.slice(0, -1) + ending;
   }
 
   return `${str}${ending}`;
@@ -59,8 +60,31 @@ export const pluralize = (
  */
 export const slugify = (str: string): string => {
   return str
+    .normalize("NFD") // Decomposes combined graphemes (e.g., 'é' -> 'e' + '´')
+    .replace(/[\u0300-\u036f]/g, "") // Removes the accent marks
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^a-z0-9]+/g, "-") // Replaces non-alphanumeric characters with hyphens
+    .replace(/^-+|-+$/g, ""); // Removes leading/trailing hyphens
+};
+
+/**
+ * Truncates a string to a specified length and adds an ellipsis.
+ * A must-have for UI-focused utility libraries.
+ * @param str - The string to truncate.
+ * @param length - The maximum length of the truncated string (excluding the suffix).
+ * @param suffix - The string to append to the truncated string (default is "...").
+ * @return The truncated string with the suffix if truncation occurred, otherwise returns the original string.
+ * @example
+ * truncate("This is a long string that needs to be shortened.", 20)
+ * // "This is a long str..."
+ */
+export const truncate = (
+  str: string,
+  length: number,
+  suffix = "...",
+): string => {
+  const safeLength = Math.max(0, length); // Defends against negative inputs
+  if (str.length <= safeLength) return str;
+  return str.slice(0, safeLength).trim() + suffix;
 };

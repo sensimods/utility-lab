@@ -33,6 +33,7 @@ pnpm add @sensimods/utility-lab
 - `capitalize(str)`
 - `pluralize(amount, str, ending?)`
 - `slugify(str)`
+- `truncate(str, length, suffix)`
 
 ### Object Utilities
 
@@ -54,6 +55,7 @@ pnpm add @sensimods/utility-lab
 - `lerp(start, end, amount)`
 - `calculateDiscountPercentage(originalPrice, newPrice)`
 - `formatCurrency(amount, currency, locale)`
+- `clamp(val, min, max)`
 
 ### Function Utilities
 
@@ -78,6 +80,7 @@ import {
   capitalize,
   pluralize,
   slugify,
+  truncate,
   deepFreeze,
   omit,
   chunk,
@@ -88,7 +91,8 @@ import {
   compact,
   randomInt,
   lerp,
-  formatCurrency
+  formatCurrency,
+  clamp,
   debounce,
   throttle,
   once,
@@ -96,14 +100,14 @@ import {
   isBrowser,
   isServer,
   isTouchDevice,
-  getEnv
+  getEnv,
 } from "@sensimods/utility-lab";
 
 // String utilities
 capitalize("hello world"); // "Hello world"
 pluralize(5, "story", "ies"); // "stories"
-slugify("Hello World! Welcome to 2026!");
-// "hello-world-welcome-to-2026"
+slugify("Hello World! Welcome to 2026!"); // "hello-world-welcome-to-2026"
+truncate("This is a long string that needs to be shortened.", 20); // "This is a long str..."
 
 // Object utilities
 const config = deepFreeze({
@@ -117,21 +121,23 @@ const publicUser = omit(user, ["password"]); // { id: 1, name: 'John' }
 
 // Array utilities
 chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
-unique([1, 2, 2, 3, 4, 4, 5]) // [1, 2, 3, 4, 5]
-shuffle([1, 2, 3, 4, 5]) // e.g., [3, 5, 1, 4, 2]
-sample(['apple', 'banana', 'cherry']) // e.g., 'banana'
-range(0, 5) // [0, 1, 2, 3, 4]
-range(10, 25, 5) // [10, 15, 20]
-compact([0, 1, false, 2, '', 3]) // [1, 2, 3]
+unique([1, 2, 2, 3, 4, 4, 5]); // [1, 2, 3, 4, 5]
+shuffle([1, 2, 3, 4, 5]); // e.g., [3, 5, 1, 4, 2]
+sample(["apple", "banana", "cherry"]); // e.g., 'banana'
+range(0, 5); // [0, 1, 2, 3, 4]
+range(10, 25, 5); // [10, 15, 20]
+compact([0, 1, false, 2, "", 3]); // [1, 2, 3]
 
 // Number utilities
 randomInt(1, 100);
 lerp(0, 100, 0.5); // 50
-formatCurrency(100, "EUR", "de-DE") // "100,00 €"
+formatCurrency(100, "EUR", "de-DE"); // "100,00 €"
+clamp(5, 1, 10); // 5 (within range)
+calculateDiscountPercentage(100, 80); // 20
 
 // Function utilities
 const fetchResults = (query: string) => {
- // Imagine this function makes an API call to fetch search results
+  // Imagine this function makes an API call to fetch search results
   console.log(`Fetching results for: ${query}`);
 };
 const handleSearch = debounce((query: string) => fetchResults(query), 500);
@@ -149,22 +155,21 @@ initialize(); // Does nothing, just returns { status: "ready" }
 
 await sleep(2000); // Wait for 2 seconds
 
-
 // Environment utilities
 if (isBrowser()) {
   console.log("This code is running in a browser!");
-};
+}
 
 if (isServer()) {
   console.log("This code is running on the server!");
-};
+}
 
 if (isTouchDevice()) {
   console.log("This device supports touch interactions!");
-};
+}
 
- const apiUrl = getEnv("API_URL", "https://default.api.com");
- console.log(apiUrl); // Will log the value of API_URL or "https://default.api.com" if not set
+const apiUrl = getEnv("API_URL", "https://default.api.com");
+console.log(apiUrl); // Will log the value of API_URL or "https://default.api.com" if not set
 ```
 
 ---

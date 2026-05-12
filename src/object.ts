@@ -1,41 +1,45 @@
 /**
  * A utility type that recursively makes all properties of an object and its nested objects readonly.
- * This ensures strict compile-time immutability.
  */
-export type DeepReadonly<T> = {
-  readonly [K in keyof T]: T[K] extends object ? DeepReadonly<T[K]> : T[K];
-};
+export type DeepReadonly<T> = T extends (infer R)[]
+  ? ReadonlyArray<DeepReadonly<R>>
+  : T extends Function
+    ? T
+    : T extends object
+      ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+      : T;
 
 /**
  * Recursively applies Object.freeze to an object and all of its nested properties.
+ * Includes protection against circular references.
  *
  * @param obj - The object to freeze.
+ * @param seen - (Internal) WeakSet to track visited objects for circular references.
  * @returns The original object, now strictly frozen and typed as DeepReadonly.
- * @example
- * const config = deepFreeze({
- *   api: {
- *     endpoint: "[https://api.v1.com](https://api.v1.com)",
- *     retries: 3
- *   },
- *   features: ["auth", "payments"]
- * });
- *
- * // Modification attempts will fail:
- * // config.api.endpoint = "[https://hack.com](https://hack.com)";
- * // ^ TypeError: Cannot assign to read only property
- *
- * // Nested arrays are also made readonly:
- * // config.features.push("billing");
- * // ^ Property 'push' does not exist on type 'readonly string[]'
- *
  */
-export const deepFreeze = <T extends object>(obj: T): DeepReadonly<T> => {
-  Object.keys(obj).forEach(prop => {
+export const deepFreeze = <T extends object>(
+  obj: T,
+  seen = new WeakSet<object>(),
+): DeepReadonly<T> => {
+  // Prevent infinite loops from circular references
+  if (seen.has(obj) || Object.isFrozen(obj)) {
+    return obj as DeepReadonly<T>;
+  }
+
+  seen.add(obj);
+
+  // Use getOwnPropertyNames to catch non-enumerable properties
+  Object.getOwnPropertyNames(obj).forEach(prop => {
     const value = (obj as any)[prop];
-    if (typeof value === "object" && value !== null) {
-      deepFreeze(value);
+
+    if (
+      value !== null &&
+      (typeof value === "object" || typeof value === "function")
+    ) {
+      deepFreeze(value, seen);
     }
   });
+
   return Object.freeze(obj) as DeepReadonly<T>;
 };
 
@@ -53,8 +57,12 @@ export const omit = <T extends object, K extends keyof T>(
   keys: K[],
 ): Omit<T, K> => {
   const result = { ...obj };
-  keys.forEach(key => {
-    delete result[key];
-  });
+
+  for (const key of keys) {
+    if (Object.prototype.hasOwnProperty.call(result, key)) {
+      delete result[key];
+    }
+  }
+
   return result as Omit<T, K>;
 };
