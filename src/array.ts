@@ -16,3 +16,32 @@ export const chunk = <T>(arr: T[], size: number): T[][] => {
   }
   return result;
 };
+
+/**
+ * Returns a new array with all duplicate elements removed.
+ * Works best with primitive values (strings, numbers, booleans).
+ *
+ * @param arr - The array to filter.
+ * @returns A new array containing only unique values.
+ * @example
+ * unique([1, 2, 2, 3, 4, 4, 5]) // [1, 2, 3, 4, 5]
+ */
+export const unique = <T>(arr: T[]): T[] => [...new Set(arr)];
+
+/**
+ * Randomly shuffles an array using the Fisher-Yates algorithm.
+ * Returns a new array and does not mutate the original.
+ *
+ * @param arr - The array to shuffle.
+ * @returns A new, randomly ordered array.
+ * @example
+ * shuffle([1, 2, 3, 4, 5]) // e.g., [3, 5, 1, 4, 2]
+ */
+export const shuffle = <T>(arr: T[]): T[] => {
+  const result = [...arr];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+};

@@ -251,6 +251,8 @@ pnpm add @sensimods/utility-lab
 ### Array Utilities
 
 - `chunk(arr, size)`
+- `unique(arr)`
+- `shuffle(arr)`
 
 ### Number Utilities
 
@@ -285,6 +287,8 @@ import {
   deepFreeze,
   omit,
   chunk,
+  unique,
+  shuffle,
   randomInt,
   lerp,
   formatCurrency
@@ -316,6 +320,8 @@ const publicUser = omit(user, ["password"]); // { id: 1, name: 'John' }
 
 // Array utilities
 chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
+unique([1, 2, 2, 3, 4, 4, 5]) // [1, 2, 3, 4, 5]
+shuffle([1, 2, 3, 4, 5]) // e.g., [3, 5, 1, 4, 2]
 
 // Number utilities
 randomInt(1, 100);
