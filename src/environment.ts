@@ -37,3 +37,17 @@ export const isTouchDevice = (): boolean => {
     isBrowser() && ("ontouchstart" in window || navigator.maxTouchPoints > 0)
   );
 };
+
+/**
+ * Safely retrieves an environment variable.
+ * @param key - The name of the environment variable to retrieve.
+ * @param fallback - The value to return if the environment variable is not set (default is an empty string).
+ * @returns The value of the environment variable or the fallback.
+ * @example
+ * const apiUrl = getEnv("API_URL", "https://default.api.com");
+ * console.log(apiUrl); // Will log the value of API_URL or "https://default.api.com" if not set
+ */
+export const getEnv = (key: string, fallback: string = ""): string => {
+  if (typeof process === "undefined" || !process.env) return fallback;
+  return process.env[key] ?? fallback;
+};

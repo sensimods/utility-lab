@@ -268,6 +268,7 @@ pnpm add @sensimods/utility-lab
 - `isBrowser()`
 - `isServer()`
 - `isTouchDevice()`
+- `getEnv(key, fallback)`
 
 ---
 
@@ -288,6 +289,7 @@ import {
   isBrowser,
   isServer,
   isTouchDevice,
+  getEnv
 } from "@sensimods/utility-lab";
 
 // String utilities
@@ -331,6 +333,9 @@ if (isServer()) {
 if (isTouchDevice()) {
   console.log("This device supports touch interactions!");
 };
+
+ const apiUrl = getEnv("API_URL", "https://default.api.com");
+ console.log(apiUrl); // Will log the value of API_URL or "https://default.api.com" if not set
 ```
 
 ---

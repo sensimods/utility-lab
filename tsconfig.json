@@ -9,7 +9,8 @@
     "strict": true, // Keeps our code ironclad
     "esModuleInterop": true, // Helps with importing older libraries
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
   },
   "include": ["src/**/*"], // Only compile files in the src folder
   "exclude": ["node_modules"]
