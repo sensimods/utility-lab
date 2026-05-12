@@ -263,6 +263,10 @@ pnpm add @sensimods/utility-lab
 
 - `debounce(func, delay)`
 
+### Environment Utilities
+
+- `isBrowser()`
+
 ---
 
 ## Quick Example
@@ -279,6 +283,7 @@ import {
   lerp,
   formatCurrency
   debounce,
+  isBrowser
 } from "@sensimods/utility-lab";
 
 // String utilities
@@ -297,6 +302,7 @@ const config = deepFreeze({
 const user = { id: 1, name: "John", password: "123" };
 const publicUser = omit(user, ["password"]); // { id: 1, name: 'John' }
 
+// Array utilities
 chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
 
 // Number utilities
@@ -308,6 +314,11 @@ formatCurrency(100, "EUR", "de-DE") // "100,00 €"
 const debounced = debounce(() => {
   console.log("Executed!");
 }, 500);
+
+// Environment utilities
+if (isBrowser()) {
+  console.log("This code is running in a browser!");
+};
 ```
 
 ---

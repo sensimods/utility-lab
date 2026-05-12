@@ -8,3 +8,4 @@ export {
 } from "./number";
 export { debounce } from "./function";
 export { chunk } from "./array";
+export { isBrowser } from "./environment";
