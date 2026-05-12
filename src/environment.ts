@@ -12,3 +12,14 @@ export const isBrowser = (): boolean => {
     typeof window !== "undefined" && typeof window.document !== "undefined"
   );
 };
+
+/**
+ * Checks if the code is currently running on the server.
+ * Useful for guarding Node-specific logic in Next.js.
+ * @returns `true` if running on the server, `false` otherwise.
+ * @example
+ * if (isServer()) {
+ *   console.log("This code is running on the server!");
+ * }
+ */
+export const isServer = (): boolean => !isBrowser();

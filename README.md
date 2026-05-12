@@ -266,6 +266,7 @@ pnpm add @sensimods/utility-lab
 ### Environment Utilities
 
 - `isBrowser()`
+- `isServer()`
 
 ---
 
@@ -283,7 +284,8 @@ import {
   lerp,
   formatCurrency
   debounce,
-  isBrowser
+  isBrowser,
+  isServer,
 } from "@sensimods/utility-lab";
 
 // String utilities
@@ -318,6 +320,10 @@ const debounced = debounce(() => {
 // Environment utilities
 if (isBrowser()) {
   console.log("This code is running in a browser!");
+};
+
+if (isServer()) {
+  console.log("This code is running on the server!");
 };
 ```
 
