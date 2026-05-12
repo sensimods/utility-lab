@@ -246,6 +246,7 @@ pnpm add @sensimods/utility-lab
 ### Object Utilities
 
 - `deepFreeze(obj)`
+- `omit(obj, keys)`
 
 ### Number Utilities
 
@@ -267,6 +268,7 @@ import {
   pluralize,
   slugify,
   deepFreeze,
+  omit,
   randomInt,
   lerp,
   debounce,
@@ -285,6 +287,9 @@ const config = deepFreeze({
   },
 });
 
+const user = { id: 1, name: "John", password: "123" };
+const publicUser = omit(user, ["password"]); // { id: 1, name: 'John' }
+
 // Number utilities
 randomInt(1, 100);
 lerp(0, 100, 0.5); // 50
@@ -301,7 +306,7 @@ const debounced = debounce(() => {
 
 Full documentation, examples, and API references are available here:
 
-👉 **[View Documentation](https://github.com/sensimods/utility-lab)**
+👉 **[View Documentation](https://sensimods.github.io/utility-lab/)**
 
 ---
 
