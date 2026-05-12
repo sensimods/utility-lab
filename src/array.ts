@@ -45,3 +45,16 @@ export const shuffle = <T>(arr: T[]): T[] => {
   }
   return result;
 };
+
+/**
+ * Returns a random element from an array.
+ *
+ * @param arr - The array to sample from.
+ * @returns A single random element from the array, or undefined if the array is empty.
+ * @example
+ * sample(['apple', 'banana', 'cherry']) // e.g., 'banana'
+ */
+export const sample = <T>(arr: T[]): T | undefined => {
+  if (arr.length === 0) return undefined;
+  return arr[Math.floor(Math.random() * arr.length)];
+};

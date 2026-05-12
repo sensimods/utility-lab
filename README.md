@@ -253,6 +253,7 @@ pnpm add @sensimods/utility-lab
 - `chunk(arr, size)`
 - `unique(arr)`
 - `shuffle(arr)`
+- `sample(arr)`
 
 ### Number Utilities
 
@@ -289,6 +290,7 @@ import {
   chunk,
   unique,
   shuffle,
+  sample,
   randomInt,
   lerp,
   formatCurrency
@@ -322,6 +324,7 @@ const publicUser = omit(user, ["password"]); // { id: 1, name: 'John' }
 chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
 unique([1, 2, 2, 3, 4, 4, 5]) // [1, 2, 3, 4, 5]
 shuffle([1, 2, 3, 4, 5]) // e.g., [3, 5, 1, 4, 2]
+sample(['apple', 'banana', 'cherry']) // e.g., 'banana'
 
 // Number utilities
 randomInt(1, 100);

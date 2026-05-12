@@ -7,5 +7,5 @@ export {
   formatCurrency,
 } from "./number";
 export { debounce, throttle, once, sleep } from "./function";
-export { chunk, unique, shuffle } from "./array";
+export { chunk, unique, shuffle, sample } from "./array";
 export { isBrowser, isServer, isTouchDevice, getEnv } from "./environment";
