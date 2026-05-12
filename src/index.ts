@@ -6,6 +6,6 @@ export {
   calculateDiscountPercentage,
   formatCurrency,
 } from "./number";
-export { debounce } from "./function";
+export { debounce, throttle, once } from "./function";
 export { chunk } from "./array";
-export { isBrowser } from "./environment";
+export { isBrowser, isServer, isTouchDevice } from "./environment";

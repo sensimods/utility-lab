@@ -59,3 +59,32 @@ export const throttle = <T extends (...args: any[]) => any>(
     }
   };
 };
+
+/**
+ * Ensures a function can only be called once. Subsequent calls will
+ * return the result of the first execution.
+ * @param func - The function to execute only once.
+ * @returns A new function that expects the exact same parameters as the original.
+ * @example
+ * const initialize = once(() => {
+ *   console.log("Setup complete!");
+ *   return { status: "ready" };
+ * });
+ *
+ * initialize(); // Logs "Setup complete!"
+ * initialize(); // Does nothing, just returns { status: "ready" }
+ */
+export const once = <T extends (...args: any[]) => any>(
+  func: T,
+): ((...args: Parameters<T>) => ReturnType<T>) => {
+  let ran = false;
+  let result: ReturnType<T>;
+
+  return (...args: Parameters<T>): ReturnType<T> => {
+    if (!ran) {
+      result = func(...args);
+      ran = true;
+    }
+    return result;
+  };
+};

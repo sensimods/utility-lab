@@ -263,6 +263,7 @@ pnpm add @sensimods/utility-lab
 
 - `debounce(func, delay)`
 - `throttle(func, limit)`
+- `once(func)`
 
 ### Environment Utilities
 
@@ -288,6 +289,7 @@ import {
   formatCurrency
   debounce,
   throttle,
+  once,
   isBrowser,
   isServer,
   isTouchDevice,
@@ -327,6 +329,15 @@ const handleSearch = debounce((query: string) => fetchResults(query), 500);
 
 const handleScroll = throttle(() => console.log("Scrolling..."), 100);
 window.addEventListener("scroll", handleScroll);
+
+const initialize = once(() => {
+  console.log("Setup complete!");
+  return { status: "ready" };
+});
+
+initialize(); // Logs "Setup complete!"
+initialize(); // Does nothing, just returns { status: "ready" }
+
 
 // Environment utilities
 if (isBrowser()) {
