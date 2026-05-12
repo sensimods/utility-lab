@@ -69,3 +69,42 @@ export const calculateDiscountPercentage = (
   // Uses Number() and toFixed(2) to cap decimals at 2 places, returning a strict number type.
   return Number(discount.toFixed(2));
 };
+
+/**
+ * Formats a number as a localized currency string.
+ * Utilizes the built-in Intl.NumberFormat API for robust internationalization support.
+ * Falls back to a default format if the provided locale or currency code is invalid.
+ * @param amount - The numeric amount to format as currency.
+ * @param currency - The ISO 4217 currency code (e.g., "USD", "EUR"). Defaults to "USD".
+ * @param locale - The BCP 47 language tag for locale formatting (e.g., "en-US", "de-DE"). Defaults to "en-US".
+ * @returns A string representing the formatted currency amount.
+ * @throws Will throw a TypeError if the amount is not a finite number.
+ * @example
+ * formatCurrency(1250.5)
+ * // "$1,250.50"
+ *
+ * @example
+ * formatCurrency(100, "EUR", "de-DE")
+ * // "100,00 €"
+ */
+export const formatCurrency = (
+  amount: number,
+  currency = "USD",
+  locale = "en-US",
+): string => {
+  if (!Number.isFinite(amount)) {
+    throw new TypeError("Amount must be a finite number");
+  }
+
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+    }).format(amount);
+  } catch {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(amount);
+  }
+};

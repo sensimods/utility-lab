@@ -248,11 +248,16 @@ pnpm add @sensimods/utility-lab
 - `deepFreeze(obj)`
 - `omit(obj, keys)`
 
+### Array Utilities
+
+- `chunk(arr, size)`
+
 ### Number Utilities
 
 - `randomInt(min, max)`
 - `lerp(start, end, amount)`
 - `calculateDiscountPercentage(originalPrice, newPrice)`
+- `formatCurrency(amount, currency, locale)`
 
 ### Function Utilities
 
@@ -269,8 +274,10 @@ import {
   slugify,
   deepFreeze,
   omit,
+  chunk,
   randomInt,
   lerp,
+  formatCurrency
   debounce,
 } from "@sensimods/utility-lab";
 
@@ -290,9 +297,12 @@ const config = deepFreeze({
 const user = { id: 1, name: "John", password: "123" };
 const publicUser = omit(user, ["password"]); // { id: 1, name: 'John' }
 
+chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
+
 // Number utilities
 randomInt(1, 100);
 lerp(0, 100, 0.5); // 50
+formatCurrency(100, "EUR", "de-DE") // "100,00 €"
 
 // Function utilities
 const debounced = debounce(() => {
